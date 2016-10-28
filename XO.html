@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jquery-3.1.0.min.js"></script>
+    <style>
+        #table {
+            margin: 20px auto;
+            width: 600px;
+            height: 600px;
+            border: 1px solid black;
+            display: table;
+        }
+        
+        #table td {
+            border: 1px solid black;
+        }
+        
+        .circle {
+            width: 130px;
+            height: 130px;
+            border: 20px solid red;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: none;
+        }
+        
+        .xWrapper {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 10px;
+            left: 80px;
+            display: none;
+        }
+        
+        .x1 {
+            width: 30px;
+            height: 170px;
+            background: red;
+            transform: rotate(40deg);
+            position: absolute;
+        }
+        
+        .x2 {
+            width: 30px;
+            height: 170px;
+            background: red;
+            transform: rotate(-40deg);
+            position: absolute;
+        }
+        
+        td {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="table">
+        <tr>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+            <td>
+                <div class="circle"></div>
+                <div class="xWrapper">
+                    <div class="x1"></div>
+                    <div class="x2"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <script>
+        var check = true;
+        var mas = new Array(3);
+        for (i = 0; i < 3; i++) {
+            mas[i] = new Array(3);
+        }
+        $("td").on("click", function () {
+            console.log($(this).parent().index());
+            console.log($(this).index());
+            $(this).unbind('click');
+            if (check === true) {
+                $(this).children('.xWrapper').css("display", "block");
+                check = false;
+                mas[$(this).parent().index()][$(this).index()] = 1;
+            } else {
+                $(this).children('.circle').css("display", "block");
+                check = true;
+                mas[$(this).parent().index()][$(this).index()] = 0;
+            }
+            var xx = 0;
+            var zz = 0;
+            var xz = 0;
+            var zx = 0;
+            for (i = 0; i < 3; i++) {
+
+                var xwin = 0;
+                var zerowin = 0;
+                var z = 0;
+                var x = 0;
+                if ((mas[i][i] == 1) || (mas[i][i] == 0)) {
+                    if (mas[i][i] == 1) {
+                        xx++;
+                    } else if (mas[i][i] == 0) {
+                        zz++;
+                    }
+                }
+                if ((mas[i][2 - i] == 1) || (mas[i][2 - i] == 0)) {
+                    if (mas[i][2 - i] == 1) {
+                        xz++;
+                    } else if (mas[i][2 - i] == 0) {
+                        zx++;
+                    }
+                }
+                for (j = 0; j < 3; j++) {
+
+                    if ((mas[j][i] == 1) || (mas[j][i] == 0)) {
+                        if (mas[j][i] == 1) {
+                            x++;
+                        } else if (mas[j][i] == 0) {
+                            zerowin++;
+                        }
+                    }
+                    if ((mas[i][j] == 1) || (mas[i][j] == 0)) {
+                        if (mas[i][j] == 1) {
+                            xwin++;
+                        } else if (mas[i][j] == 0) {
+                            z++;
+                        }
+                    }
+                }
+                if (xwin == 3) {
+                    alert("x wins");
+                    console.log('x wins');
+                    $("td").unbind("click");
+                } else if (zerowin == 3) {
+                    console.log('zero wins');
+                    $("td").unbind("click");
+                } else if (z == 3) {
+                    console.log("z is win");
+                    $("td").unbind("click");
+                } else if (x == 3) {
+                    console.log("x is win");
+                    $("td").unbind("click");
+                } else if (xx == 3) {
+                    console.log("xx is win");
+                    $("td").unbind("click");
+                } else if (zz == 3) {
+                    console.log("zz is win");
+                    $("td").unbind("click");
+                } else if (xz == 3) {
+                    console.log("xz is win");
+                    $("td").unbind("click");
+                } else if (zx == 3) {
+                    console.log("zx is win");
+                    $("td").unbind("click");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
